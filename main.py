@@ -11,7 +11,7 @@ bot = telebot.TeleBot(config.TESTTOKEN)
 
 class DataBase: #Класс для базы данных пользователей бота
     def __init__(self): #Метод вызывается при инициации класса
-        cluster = MongoClient(congig.clusterURL) #Подклчение к Mongo-клиенту
+        cluster = MongoClient(config.clusterURL) #Подклчение к Mongo-клиенту
 
         self.db = cluster["SecuTor"] #Инициация кластера из MongoBD
         self.users = self.db["SecuTor"] #Инициация коллекции из MongoBD

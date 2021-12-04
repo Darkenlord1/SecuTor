@@ -25,3 +25,5 @@ helpString = '/start - начать работу бота; \n/help - получ�
 clusterURL = 'mongodb://admin:pass@cluster0-shard-00-00.2tl16.mongodb.net:27017,cluster0-shard-00-01.2tl16.mongodb.net:27017,cluster0-shard-00-02.2tl16.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-p4ukz5-shard-0&authSource=admin&retryWrites=true&w=majority'
 userNotFound = 'Упс! Кажется, Вы не зарегистрированы в системе. Зарегистрируемся?'
 userFound = 'Авторизация прошла успешно, можно приступать к обучению!'
+request_success = 'Запрос успешно отправлен!'
+request_decline = 'У вас уже есть активный запрос!'

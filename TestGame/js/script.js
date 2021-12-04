@@ -109,8 +109,8 @@ function showQuetions(index){
     }
 }
 // creating the new div tags which for icons
-let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
-let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+//let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
+//let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
 
 //if user clicked on option
 function optionSelected(answer){
@@ -123,18 +123,18 @@ function optionSelected(answer){
     if(userAns == correcAns){ //if user selected option is equal to array's correct answer
         userScore += 1; //upgrading score value with 1
         answer.classList.add("correct"); //adding green color to correct selected option
-        answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
+        //answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
         console.log("Correct Answer");
         console.log("Your correct answers = " + userScore);
     }else{
         answer.classList.add("incorrect"); //adding red color to correct selected option
-        answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
+        //answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
         console.log("Wrong Answer");
 
         for(i=0; i < allOptions; i++){
             if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer 
                 option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-                option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+                //option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
                 console.log("Auto selected correct answer.");
             }
         }
@@ -156,11 +156,11 @@ function showResult(){
         scoreText.innerHTML = scoreTag;  //adding new span tag inside score_Text
     }
     else if(userScore > 1){ // if user scored more than 1
-        let scoreTag = '<span>and nice , You got <p>'+ userScore +'</p> из <p>'+ questions.length +'</p></span>';
+        let scoreTag = '<span>Неплохо! Ты прошел <p>'+ userScore +'</p> из <p>'+ questions.length +'</p></span>';
         scoreText.innerHTML = scoreTag;
     }
     else{ // if user scored less than 1
-        let scoreTag = '<span>and sorry , You got only <p>'+ userScore +'</p> из <p>'+ questions.length +'</p></span>';
+        let scoreTag = '<span>и к сожалению, ты получил только <p>'+ userScore +'</p> из <p>'+ questions.length +'</p></span>';
         scoreText.innerHTML = scoreTag;
     }
 }
@@ -182,7 +182,7 @@ function startTimer(time){
             for(i=0; i < allOptions; i++){
                 if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
                     option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-                    option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+                    //option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
                     console.log("Time Off: Auto selected correct answer.");
                 }
             }

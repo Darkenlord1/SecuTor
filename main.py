@@ -11,7 +11,7 @@ bot = telebot.TeleBot(config.TESTTOKEN)
 
 class DataBase: #Класс для базы данных пользователей бота
     def __init__(self): #Метод вызывается при инициации класса
-        cluster = MongoClient(config.clusterURL) #Подклчение к Mongo-клиенту
+        cluster = MongoClient(config.DBURL) #Подклчение к Mongo-клиенту
 
         self.db = cluster["SecuTor"] #Инициация кластера из MongoBD
         self.users = self.db["SecuTor"] #Инициация коллекции из MongoBD
@@ -77,7 +77,9 @@ def get_text_messages(message):
     elif content == strings.regTraining:
         register.register_procedure(bot, message)  # Отлов кейса при выборе тренинга
     elif content == strings.backToMenu:
-        open_main_menu(message)  # Отлов кейса при возврате в главное меню
+        open_main_menu(message)  # Отлов кейса при возврате в главное менюe
+    elif content == strings.begin:
+        bot.send_game(message.chat.id, config.GAMENAME)
     else:
         bot.send_message(message.chat.id, strings.unsignedMessage)  # Отправка сообщения что бот не знает что ответить при недетерминированных кейсах
 

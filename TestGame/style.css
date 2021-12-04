@@ -35,7 +35,7 @@ body{
     z-index: 5;
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1);
-    width: 35%;
+    /* width: 35%; */
 }
 
 .start_btn button{

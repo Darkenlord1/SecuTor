@@ -79,9 +79,13 @@ def get_text_messages(message):
     elif content == strings.backToMenu:
         open_main_menu(message)  # Отлов кейса при возврате в главное менюe
     elif content == strings.begin:
-        bot.send_game(message.chat.id, config.GAMENAME)
+        bot.send_game(message.chat.id, game_short_name = config.GAMENAME)
     else:
         bot.send_message(message.chat.id, strings.unsignedMessage)  # Отправка сообщения что бот не знает что ответить при недетерминированных кейсах
 
+
+@bot.callback_query_handler(func=lambda callback_query: callback_query.game_short_name==config.GAMENAME)
+def game(call):
+    bot.answer_callback_query(callback_query_id=call.id, url=config.GAMEURL)
 
 bot.polling(none_stop=True, interval=0)

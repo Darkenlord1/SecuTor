@@ -13,9 +13,10 @@ class TrainingRequests:
 
     def create_request(self, message, direction):
         from_user = message.from_user
-        user_request = self.requests.find_one({"user_id": from_user.id}, {"direction": direction})
+        user_request = self.requests.find_one({"user_id": from_user.id})
+        direction_request = self.requests.find_one({"request_direction": direction})
 
-        if user_request:
+        if user_request and direction_request:
             request_status = strings.request_decline
             return request_status
 

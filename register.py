@@ -7,7 +7,7 @@ from pymongo import MongoClient
 
 class TrainingRequests:
     def __init__(self):
-        cluster = MongoClient(config.clusterURL)  # Подклчение к Mongo-клиенту
+        cluster = MongoClient(config.DBURL)  # Подклчение к Mongo-клиенту
         self.db = cluster["SecuTor"]  # Инициация кластера из MongoBD
         self.requests = self.db["Training_requests"]  # Инициация коллекции из MongoBD
 
@@ -27,7 +27,7 @@ class TrainingRequests:
                 "request_status": True
             }
 
-            self.requests.inset_one(request)
+            self.requests.insert_one(request)
             request_status = strings.request_success
 
             return request_status

@@ -32,12 +32,16 @@ class DataBase:
                 "first_name": from_user.first_name,
                 "last_name": from_user.last_name,
                 "knowledge": {strings.passwordsAndLogins: 0, strings.webAndInternet: 0, strings.computerSafety: 0},
-                "course_passed": False
+                "course_passed": False,
+                "certificate_received": False
             }
 
             self.users.insert_one(user)
 
             return user
+
+    def update(self, message):
+        self.users.update_one({"user_id": message.from_user.id}, {'$set': {"certificate_received": True}})
 
 
 db = DataBase()  # Инициация объекта базы данных
@@ -81,7 +85,8 @@ def get_text_messages(message):
     elif content == strings.backToMenu:
         open_main_menu(message)  # Отлов кейса при возврате в главное меню
 
-    elif (content == strings.computerSafety) or (content == strings.webAndInternet) or (content == strings.passwordsAndLogins):
+    elif (content == strings.computerSafety) or (content == strings.webAndInternet) or (
+            content == strings.passwordsAndLogins):
         request = register.create_new_request(message, content)
 
         if request == strings.request_decline:
@@ -101,6 +106,7 @@ def get_text_messages(message):
 
     elif content == strings.sertificate:
         certificates.get_certificate(bot, db.get_user(message))
+        db.update(message)
 
     elif content == strings.show_info:
         user_profile.get_user_info(bot, message, db.get_user(message))
@@ -147,7 +153,8 @@ def open_main_menu(message):
 
     markup.add(menu_one, menu_two, menu_three, menu_four)
 
-    bot.send_message(message.chat.id, strings.choice_item, reply_markup=markup) # Функция для открытия главного меню бота
+    bot.send_message(message.chat.id, strings.choice_item,
+                     reply_markup=markup)  # Функция для открытия главного меню бота
 
 
 bot.polling(none_stop=True, interval=0)

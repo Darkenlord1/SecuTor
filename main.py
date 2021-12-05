@@ -29,7 +29,8 @@ class DataBase:  # Класс для базы данных пользовате�
                 "user_id": from_user.id,
                 "first_name": from_user.first_name,
                 "last_name": from_user.last_name,
-                "knowledge": {strings.passwordsAndLogins: 0, strings.webAndInternet: 0, strings.computerSafety: 0}
+                "knowledge": {strings.passwordsAndLogins: 0, strings.webAndInternet: 0, strings.computerSafety: 0},
+                "course_passed": False
             }
 
             self.users.insert_one(user)

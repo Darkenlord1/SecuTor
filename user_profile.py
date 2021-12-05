@@ -9,9 +9,10 @@ def open_user_info(bot, message):
     markup = types.ReplyKeyboardMarkup(row_width=1)
     menu_one = types.InlineKeyboardButton(strings.show_requests)
     menu_two = types.InlineKeyboardButton(strings.show_info)
+    menu_three = types.InlineKeyboardButton(strings.sertificate)
     back = types.InlineKeyboardButton(strings.backToMenu, callback_data='back')
 
-    markup.add(menu_one, menu_two, back)
+    markup.add(menu_one, menu_two, menu_three, back)
     bot.send_message(message.chat.id, strings.choice_item, reply_markup=markup)
 
 

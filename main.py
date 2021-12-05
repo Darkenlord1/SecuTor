@@ -88,23 +88,19 @@ testing = Testing()
 @bot.message_handler(commands=['test'])
 def start(message):
     user = testing.get_user(message.chat.id)
-    print(user)
 
     if user["is_passed"]:
         bot.send_message(message.from_user.id, 'увы(')
-        print(2)
         return
 
-    if user["is_passing"]:
-        print(3)
-        return
+    #if user["is_passing"]:
+        #return
 
     testing.set_user(message.chat.id, {"question_index": 0, "is_passing": True})
 
     user = testing.get_user(message.chat.id)
     post = get_question_message(user)
     if post:
-        print(4)
         bot.send_message(message.from_user.id, post["text"], reply_markup=post["keyboard"])
 
 
@@ -129,9 +125,10 @@ def next_question(query):
 
     if user["is_passed"] or not user["is_passing"]:
         return
-
+    print(user["question_index"])
     user["question_index"] += 1
-    testing.set_user((query.message.chat.id, {"question_index": user["question_index"]}))
+    print(user["question_index"])
+    testing.set_user(query.message.chat.id, {"question_index": user["question_index"]})
 
     post = get_question_message(user)
     if post:
@@ -151,7 +148,7 @@ def get_question_message(user):
 
             text = 'вы ответили правильно...'
 
-            testing.set_user(user["chat_id"], {"is_passed": True, "is_passing": False})
+            testing.set_user(user["user_id"], {"is_passed": True, "is_passing": False})
 
             return {
                 "text": text,
@@ -185,9 +182,9 @@ def get_answered_message(user):
         text += f"{chr(answer_index + 1)} {answer}"
 
         if answer_index == question["correct"]:
-            text += " галочка"
+            text += " ✅"
         elif answer_index == user["answers"][-1]:
-            text += " nonono"
+            text += " ❌"
 
         text += "\n"
 

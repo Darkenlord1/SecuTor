@@ -42,10 +42,10 @@ class Testing:
         return self.questions.find_one({"id": index})
 
 
-bot = telebot.TeleBot(config.TESTTOKEN)
 testing = Testing()
 
 
+@bot.message_handler(commands=['test'])
 def start(message):
     user = testing.get_user(message.chat.id)
 
@@ -53,8 +53,8 @@ def start(message):
         bot.send_message(message.from_user.id, 'увы(')
         return
 
-    if user["is_passing"]:
-        return
+    #if user["is_passing"]:
+        #return
 
     testing.set_user(message.chat.id, {"question_index": 0, "is_passing": True})
 
@@ -85,9 +85,10 @@ def next_question(query):
 
     if user["is_passed"] or not user["is_passing"]:
         return
-
+    print(user["question_index"])
     user["question_index"] += 1
-    testing.set_user((query.message.chat.id, {"question_index": user["question_index"]}))
+    print(user["question_index"])
+    testing.set_user(query.message.chat.id, {"question_index": user["question_index"]})
 
     post = get_question_message(user)
     if post:
@@ -95,7 +96,9 @@ def next_question(query):
 
 
 def get_question_message(user):
+    print("hello world")
     if user["question_index"] == testing.question_count:
+        print(5)
         count = 0
         for question_index, question in enumerate(testing.questions.find({})):
             if question["correct"] == user["answers"][question_index]:
@@ -105,7 +108,7 @@ def get_question_message(user):
 
             text = 'вы ответили правильно...'
 
-            testing.set_user(user["chat_id"], {"is_passed": True, "is_passing": False})
+            testing.set_user(user["user_id"], {"is_passed": True, "is_passing": False})
 
             return {
                 "text": text,
@@ -139,9 +142,9 @@ def get_answered_message(user):
         text += f"{chr(answer_index + 1)} {answer}"
 
         if answer_index == question["correct"]:
-            text += " галочка"
+            text += " ✅"
         elif answer_index == user["answers"][-1]:
-            text += " nonono"
+            text += " ❌"
 
         text += "\n"
 

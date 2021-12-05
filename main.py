@@ -48,8 +48,6 @@ class DataBase:
         self.users.update_one({"user_id": user_id}, {'$set': {"graduate": result}})
 
 
-<<<<<<< Updated upstream
-=======
 db = DataBase()  # Инициация объекта базы данных
 
 """class Testing:
@@ -88,10 +86,7 @@ db = DataBase()  # Инициация объекта базы данных
         return self.questions.find_one({"id": index})
 
 
->>>>>>> Stashed changes
 db = DataBase()  # Инициация объекта базы данных
-<<<<<<< Updated upstream
-=======
 testing = Testing()
 
 
@@ -208,12 +203,9 @@ def get_answered_message(user):
     return {
         "text": text,
         "keyboard": keyboard
-<<<<<<< Updated upstream
     }
->>>>>>> Stashed changes
-=======
-    }"""
->>>>>>> Stashed changes
+}"""
+
 
 
 @bot.message_handler(commands=['start'])  # Функция, вызываемая при команде /start
@@ -280,12 +272,10 @@ def get_text_messages(message):
     elif content == strings.show_info:
         user_profile.get_user_info(bot, message, db.get_user(message))
 
-<<<<<<< Updated upstream
-=======
+
     #elif content == strings.test:
         #start(message)
 
->>>>>>> Stashed changes
     elif content == strings.begin:
         bot.send_game(chat_id = message.chat.id, game_short_name=config.GAMENAME)
 

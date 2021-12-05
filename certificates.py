@@ -21,7 +21,8 @@ class Certificate:
                 certificate = {
                     "user_id": user["user_id"],
                     "first_name": user["first_name"],
-                    "last_name": user["last_name"]
+                    "last_name": user["last_name"],
+                    "received_date": 0
                 }
 
                 self.certificates.insert_one(certificate)
@@ -29,6 +30,9 @@ class Certificate:
         else:
             result = strings.course_not_passed
             return result
+
+    def set_date(self, user, date):
+        self.certificates.update_one({"user_id": user["user_id"]}, {'$set': {"received_date": date}})
 
 
 certificates = Certificate()
@@ -73,5 +77,7 @@ def generate_doc(user):
     drawing.text(date_pos, date, font=date_font, fill=font_color)
     drawing.text(description_pos, strings.certificate_description, font=description_font, fill=font_color)
     drawing.text(entry_pos, strings.certificate_entry, font=font, fill=font_color)
+
+    certificates.set_date(user, date)
 
     return img

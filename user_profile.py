@@ -1,7 +1,6 @@
 # Импорт необходимых библиотек
 from telebot import types
 import strings
-import config
 import register
 
 

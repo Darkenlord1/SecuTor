@@ -1,4 +1,4 @@
-//selecting all required elements
+//Обозначение всех необходимых элементов
 const start_btn = document.querySelector(".start_btn button");
 const info_box = document.querySelector(".info_box");
 const exit_btn = info_box.querySelector(".buttons .quit");
@@ -10,27 +10,27 @@ const time_line = document.querySelector("header .time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
 
-// if startQuiz button clicked
+// При старте
 start_btn.onclick = ()=>{
-    info_box.classList.add("activeInfo"); //show info box
+    info_box.classList.add("activeInfo"); //Показать инфо-панель
 }
 
-// if exitQuiz button clicked
+// При выходе
 exit_btn.onclick = ()=>{
-    info_box.classList.remove("activeInfo"); //hide info box
+    info_box.classList.remove("activeInfo"); //Скрыть инфо-панель
 }
 
-// if continueQuiz button clicked
+// При продолжении
 continue_btn.onclick = ()=>{
-    info_box.classList.remove("activeInfo"); //hide info box
-    quiz_box.classList.add("activeQuiz"); //show quiz box
-    showQuetions(0); //calling showQestions function
-    queCounter(1); //passing 1 parameter to queCounter
-    startTimer(15); //calling startTimer function
-    startTimerLine(0); //calling startTimerLine function
+    info_box.classList.remove("activeInfo"); //Скрыть инфо-панель
+    quiz_box.classList.add("activeQuiz"); //Показать окно тестов
+    showQuetions(0); //Вызов показа вопросов
+    queCounter(1); //Стправляется 1 параметр в queCounter
+    startTimer(30); //Вызов таймера
+    startTimerLine(0); //вызов startTimerLine функции
 }
 
-let timeValue =  15;
+let timeValue =  30;
 let que_count = 0;
 let que_numb = 1;
 let userScore = 0;
@@ -45,7 +45,7 @@ const quit_quiz = result_box.querySelector(".buttons .quit");
 restart_quiz.onclick = ()=>{
     quiz_box.classList.add("activeQuiz"); //show quiz box
     result_box.classList.remove("activeResult"); //hide result box
-    timeValue = 15; 
+    timeValue = 30; 
     que_count = 0;
     que_numb = 1;
     userScore = 0;
@@ -197,8 +197,8 @@ function startTimer(time){
 function startTimerLine(time){
     counterLine = setInterval(timer, 29);
     function timer(){
-        time += 1; //upgrading time value with 1
-        time_line.style.width = time * (672 / 550) + "px"; //increasing width of time_line with px by time value
+        time += 1/2; //upgrading time value with 1
+        time_line.style.width = time + "px"; //increasing width of time_line with px by time value
         if(time > 549){ //if time value is greater than 549
             clearInterval(counterLine); //clear counterLine
         }

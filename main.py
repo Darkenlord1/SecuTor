@@ -48,6 +48,47 @@ class DataBase:
         self.users.update_one({"user_id": user_id}, {'$set': {"graduate": result}})
 
 
+<<<<<<< Updated upstream
+=======
+db = DataBase()  # Инициация объекта базы данных
+
+"""class Testing:
+    def __init__(self):
+        cluster = MongoClient(config.DBURL)  # Подклчение к Mongo-клиенту
+
+        self.db = cluster["SecuTor"]  # Инициация кластера из MongoBD
+        self.users = self.db["Questions_users"]  # Инициация коллекции из MongoBD
+        self.questions = self.db["Questions"]  # Инициация коллекции из MongoBD
+
+        self.question_count = len(list(self.questions.find({})))
+
+    def get_user(self, user_id):
+        user = self.users.find_one({"user_id": user_id})
+
+        if user:
+            return user
+
+        else:
+            user = {
+                "user_id": user_id,
+                "is_passed": False,
+                "is_passing": False,
+                "question_index": None,
+                "answers": []
+            }
+
+            self.users.insert_one(user)
+
+            return user
+
+    def set_user(self, user_id, update):
+        self.users.update_one({"user_id": user_id}, {'$set': update})
+
+    def get_question(self, index):
+        return self.questions.find_one({"id": index})
+
+
+>>>>>>> Stashed changes
 db = DataBase()  # Инициация объекта базы данных
 <<<<<<< Updated upstream
 =======
@@ -167,7 +208,11 @@ def get_answered_message(user):
     return {
         "text": text,
         "keyboard": keyboard
+<<<<<<< Updated upstream
     }
+>>>>>>> Stashed changes
+=======
+    }"""
 >>>>>>> Stashed changes
 
 
@@ -235,8 +280,14 @@ def get_text_messages(message):
     elif content == strings.show_info:
         user_profile.get_user_info(bot, message, db.get_user(message))
 
+<<<<<<< Updated upstream
+=======
+    #elif content == strings.test:
+        #start(message)
+
+>>>>>>> Stashed changes
     elif content == strings.begin:
-        bot.send_game(message.chat.id, game_short_name=config.GAMENAME)
+        bot.send_game(chat_id = message.chat.id, game_short_name=config.GAMENAME)
 
     else:
         bot.send_message(message.chat.id,

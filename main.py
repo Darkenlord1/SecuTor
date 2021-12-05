@@ -7,7 +7,6 @@ import strings
 import register
 import user_profile
 import certificates
-import test_quiz
 
 bot = telebot.TeleBot(config.TESTTOKEN)
 
@@ -34,7 +33,8 @@ class DataBase:
                 "last_name": from_user.last_name,
                 "knowledge": {strings.passwordsAndLogins: 0, strings.webAndInternet: 0, strings.computerSafety: 0},
                 "course_passed": False,
-                "certificate_received": False
+                "certificate_received": False,
+                "graduate": None
             }
 
             self.users.insert_one(user)
@@ -43,6 +43,9 @@ class DataBase:
 
     def update(self, message):
         self.users.update_one({"user_id": message.from_user.id}, {'$set': {"certificate_received": True}})
+
+    def set_graduate(self, user_id, result):
+        self.users.update_one({"user_id": user_id}, {'$set': {"graduate": result}})
 
 
 class Testing:
@@ -90,11 +93,8 @@ def start(message):
     user = testing.get_user(message.chat.id)
 
     if user["is_passed"]:
-        bot.send_message(message.from_user.id, 'увы(')
+        bot.send_message(message.from_user.id, 'Вы уже проходили тестирование.')
         return
-
-    #if user["is_passing"]:
-        #return
 
     testing.set_user(message.chat.id, {"question_index": 0, "is_passing": True})
 
@@ -125,9 +125,8 @@ def next_question(query):
 
     if user["is_passed"] or not user["is_passing"]:
         return
-    print(user["question_index"])
+
     user["question_index"] += 1
-    print(user["question_index"])
     testing.set_user(query.message.chat.id, {"question_index": user["question_index"]})
 
     post = get_question_message(user)
@@ -136,9 +135,7 @@ def next_question(query):
 
 
 def get_question_message(user):
-    print("hello world")
     if user["question_index"] == testing.question_count:
-        print(5)
         count = 0
         for question_index, question in enumerate(testing.questions.find({})):
             if question["correct"] == user["answers"][question_index]:
@@ -146,7 +143,17 @@ def get_question_message(user):
 
             percents = round(100 * count / testing.question_count)
 
-            text = 'вы ответили правильно...'
+            if percents < 30:
+                result = 'Низкий уровень'
+            elif percents < 60:
+                result = 'Средний уровень'
+            elif percents < 90:
+                result = 'Высокий уровень'
+            else:
+                result = 'Превосходный уровень'
+
+            db.set_graduate(user["user_id"], result)
+            text = f"Вы ответили правильно {percents}% вопросов."
 
             testing.set_user(user["user_id"], {"is_passed": True, "is_passing": False})
 
@@ -254,15 +261,15 @@ def get_text_messages(message):
     elif content == strings.show_requests:
         user_profile.get_requests(bot, message)
 
-    elif content == strings.test:
-        start(message)
-
     elif content == strings.sertificate:
         certificates.get_certificate(bot, db.get_user(message))
         db.update(message)
 
     elif content == strings.show_info:
         user_profile.get_user_info(bot, message, db.get_user(message))
+
+    elif content == strings.test:
+        start(message)
 
     elif content == strings.begin:
         bot.send_game(message.chat.id, game_short_name=config.GAMENAME)

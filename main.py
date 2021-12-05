@@ -6,11 +6,13 @@ import config
 import strings
 import register
 import user_profile
+import certificates
 
 bot = telebot.TeleBot(config.TESTTOKEN)
 
 
-class DataBase:  # Класс для базы данных пользователей бота
+# Класс для базы данных пользователей бота
+class DataBase:
     def __init__(self):  # Метод вызывается при инициации класса
         cluster = MongoClient(config.DBURL)  # Подклчение к Mongo-клиенту
 
@@ -97,6 +99,9 @@ def get_text_messages(message):
     elif content == strings.show_requests:
         user_profile.get_requests(bot, message)
 
+    elif content == strings.sertificate:
+        certificates.get_certificate(bot, db.get_user(message))
+
     elif content == strings.show_info:
         user_profile.get_user_info(bot, message, db.get_user(message))
 
@@ -132,7 +137,8 @@ def callback_inline(call):
         print(repr(e))
 
 
-def open_main_menu(message):  # Функция для открытия главного меню бота
+# Функция для открытия главного меню бота
+def open_main_menu(message):
     markup = types.ReplyKeyboardMarkup(row_width=1)
     menu_one = types.InlineKeyboardButton(strings.test, callback_data='primaryTest')
     menu_two = types.InlineKeyboardButton(strings.regTraining, callback_data='training')
@@ -141,7 +147,7 @@ def open_main_menu(message):  # Функция для открытия глав�
 
     markup.add(menu_one, menu_two, menu_three, menu_four)
 
-    bot.send_message(message.chat.id, strings.choice_item, reply_markup=markup)
+    bot.send_message(message.chat.id, strings.choice_item, reply_markup=markup) # Функция для открытия главного меню бота
 
 
 bot.polling(none_stop=True, interval=0)

@@ -28,7 +28,8 @@ def get_requests(bot, message):
 def get_user_info(bot, message, user):
     user_knowledge = user["knowledge"]
 
-    user_info = user["first_name"] + ', ' + strings.user_info_text + strings.completed_trainings + '"' + strings.passwordsAndLogins + '":  ' + str(user_knowledge[strings.passwordsAndLogins]) + strings.info_completion
+    user_info = user["first_name"] + ', ' + strings.user_info_text
+    user_info += 'Ваш уровень познаний в сфере кибербезопасности: ' + str(user["graduate"]) + '\n\n' + strings.completed_trainings + '"' + strings.passwordsAndLogins + '":  ' + str(user_knowledge[strings.passwordsAndLogins]) + strings.info_completion
     user_info += '\n' + strings.completed_trainings + '"' + strings.webAndInternet + '":  ' + str(user_knowledge[strings.webAndInternet]) + strings.info_completion
     user_info += '\n' + strings.completed_trainings + '"' + strings.computerSafety + '":  ' + str(user_knowledge[strings.computerSafety]) + strings.info_completion
 
